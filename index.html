@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Idle Shrink (WIP)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-wrapper">
+        <canvas id="gameCanvas"></canvas>
+
+        <button id="menu-toggle" aria-label="Toggle Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="ui-panel" id="ui-panel">
+            <header class="ui-header">
+                <h1>Idle Shrink (WIP)</h1>
+            </header>
+            
+            <div class="ui-content">
+                <div class="stat-box hexagon">
+                    <p>Money: <span id="moneyDisplay">$0</span></p>
+                    <p>Balls: <span id="ballCountDisplay">0</span></p>
+                </div>
+
+                <div class="ui-section">
+                    <h3>Buy Pegs</h3>
+                    <p>Click an empty slot on the board.</p>
+                    <p>Next Cost: <span id="pegCostDisplay">$1</span></p>
+                </div>
+
+                <div class="ui-section">
+                    <h3>Shrink Ray Upgrades</h3>
+                    <div class="upgrade-grid">
+                        <button class="upgrade-button hexagon" id="upgrade_damage_2x">2x Damage</button>
+                        <button class="upgrade-button hexagon" id="upgrade_range_2x">2x Range</button>
+                        <button class="upgrade-button hexagon" id="upgrade_first_hit_2x">2x First Hit Damage</button>
+                        <button class="upgrade-button hexagon" id="upgrade_multi_target_2">Target 2 Balls</button>
+                        <button class="upgrade-button hexagon" id="upgrade_ramping_damage">Ramping Damage</button>
+                    </div>
+                </div>
+            
+                <div class="actions">
+                    <button class="action-button hexagon" id="saveButton">Save</button>
+                    <button class="action-button hexagon" id="loadButton">Load</button>
+                    <button class="action-button hexagon" id="resetButton">Reset</button>
+                    <input type="file" id="fileInput" accept=".txt">
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy;2025 Shane Studios | WORK IN PROGRESS</p>
+        <p>If you experience any bugs or other issues, message me on Discord (@rhalza). Be sure to describe the issue the best you can with any example media to show the issue.</p>
+    </footer>
+
+    <script src="js/constants.js"></script>
+    <script src="js/entities.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
