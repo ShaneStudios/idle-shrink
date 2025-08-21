@@ -1,71 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Idle Shrink (WIP)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Idle Shrink (WIP)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="game-wrapper">
-        <canvas id="gameCanvas"></canvas>
-
-        <button id="menu-toggle" aria-label="Toggle Menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
-        <div class="ui-panel" id="ui-panel">
-            <header class="ui-header">
-                <h1>Idle Shrink (WIP)</h1>
-            </header>
-            
-            <div class="ui-content">
-                <div class="stat-box hexagon">
-                    <p>Money: <span id="moneyDisplay">$0</span></p>
-                    <p>Balls: <span id="ballCountDisplay">0</span></p>
-                </div>
-
-                <div class="ui-section">
-                    <h3>Buy Pegs</h3>
-                    <p>Click an empty slot on the board.</p>
-                    <p>Next Cost: <span id="pegCostDisplay">$1</span></p>
-                </div>
-
-                <div class="ui-section">
-                    <h3>Shrink Ray Upgrades</h3>
-                    <div class="upgrade-grid">
-                        <button class="upgrade-button hexagon" id="upgrade_damage_2x">2x Damage</button>
-                        <button class="upgrade-button hexagon" id="upgrade_range_2x">2x Range</button>
-                        <button class="upgrade-button hexagon" id="upgrade_first_hit_2x">2x First Hit Damage</button>
-                        <button class="upgrade-button hexagon" id="upgrade_multi_target_2">Target 2 Balls</button>
-                        <button class="upgrade-button hexagon" id="upgrade_ramping_damage">Ramping Damage</button>
-                    </div>
-                </div>
-            
-                <div class="actions">
-                    <button class="action-button hexagon" id="saveButton">Save</button>
-                    <button class="action-button hexagon" id="loadButton">Load</button>
-                    <button class="action-button hexagon" id="resetButton">Reset</button>
-                    <input type="file" id="fileInput" accept=".txt">
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <footer>
-        <p>&copy;2025 Shane Studios | WORK IN PROGRESS</p>
-        <p>If you experience any bugs or other issues, message me on Discord (@rhalza). Be sure to describe the issue the best you can with any example media to show the issue.</p>
-    </footer>
-
-    <script src="js/constants.js"></script>
-    <script src="js/entities.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/renderer.js"></script>
-    <script src="js/main.js"></script>
+<div class="game-wrapper">
+<canvas id="gameCanvas"></canvas>
+<button id="menu-toggle" aria-label="Toggle Menu">
+<span></span>
+<span></span>
+<span></span>
+</button>
+<div class="ui-panel" id="ui-panel">
+<header class="ui-header">
+<h1>Idle Shrink (WIP)</h1>
+</header>
+<div class="ui-content">
+<div class="stat-box hexagon">
+<p>Money: <span id="moneyDisplay">$0</span></p>
+<p>Active Balls: <span id="ballCountDisplay">0</span></p>
+</div>
+<div class="ui-section">
+<h3>Buy Pegs</h3>
+<p>Click an empty slot on the board.</p>
+<p>Next Cost: <span id="pegCostDisplay">$1</span></p>
+</div>
+<div class="ui-section" id="upgrades-section">
+</div>
+<div class="ui-section" id="prestige-section">
+<h3>Prestige</h3>
+<div class="prestige-stats">
+<p>Lifetime Damage (Run): <span id="lifetimeDamageDisplay">0</span></p>
+<p>Next Point At: <span id="nextPrestigeCostDisplay">1,000</span></p>
+<p>Remaining: <span id="prestigeRemainingDisplay">1,000</span></p>
+<p>Prestige Ready: <span id="prestigeReadyDisplay">0</span></p>
+</div>
+<button class="action-button hexagon prestige-button" id="prestigeResetButton">Prestige Reset</button>
+<button class="action-button hexagon prestige-button" id="prestigeShopButton">Prestige Shop</button>
+</div>
+<div class="actions">
+<button class="action-button hexagon" id="saveButton">Save</button>
+<button class="action-button hexagon" id="loadButton">Load</button>
+<button class="action-button hexagon" id="resetButton">Reset Run</button>
+<input type="file" id="fileInput" accept=".txt">
+</div>
+</div>
+</div>
+</div>
+<div id="prestige-modal-overlay" class="hidden">
+<div class="prestige-modal-container">
+<header class="modal-header">
+<h2>Prestige Shop</h2>
+<p>Points: <span id="prestigePointsDisplay">0</span></p>
+</header>
+<div class="modal-content">
+<div id="shop-grid"></div>
+</div>
+<footer class="modal-footer">
+<div id="shop-info-pane">
+<p class="placeholder">Select an item to view its details.</p>
+</div>
+<button id="purchase-item-button" class="action-button hexagon" disabled>Purchase</button>
+</footer>
+<button id="close-modal-button">&times;</button>
+</div>
+</div>
+<div id="weapon-select-modal-overlay" class="hidden">
+<div class="prestige-modal-container">
+<header class="modal-header">
+<h2>Select Weapon Type</h2>
+<p>Choose your weapon for this run.</p>
+</header>
+<div class="modal-content">
+<div id="weapon-grid" class="weapon-grid"></div>
+</div>
+</div>
+</div>
+<footer>
+<p>&copy;2025 Shane Studios | WORK IN PROGRESS</p>
+<p>If you experience any bugs or other issues, message me on Discord (@rhalza). Be sure to describe the issue the best you can with any example media to show the issue.</p>
+</footer>
+<script src="js/constants.js"></script>
+<script src="js/entities.js"></script>
+<script src="js/game.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>
